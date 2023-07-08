@@ -9,10 +9,9 @@ import {
   NullContactsMessage,
 } from './App.styled';
 import { useSelector } from 'react-redux';
-import { getStateContacts } from './redux/selectors';
 
 const App = () => {
-  const { contacts } = useSelector(getStateContacts);
+  const contacts = useSelector(state => state.contacts);
 
   return (
     <Container>

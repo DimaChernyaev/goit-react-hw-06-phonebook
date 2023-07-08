@@ -6,21 +6,17 @@ import {
 } from './ContactList.styled';
 import { FaUserAlt, FaRegTrashAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContacts } from 'components/redux/actions';
-import { getStateFilter, getStateContacts } from 'components/redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
+import { filterVisableList } from 'components/helpers/filterVisableList';
+import { selectContacts, selectFilter } from 'redux/selectors';
 
 const ContactsList = () => {
-  const { contacts } = useSelector(getStateContacts);
-  const { filter } = useSelector(getStateFilter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
 
-  function getContactSearch(arr, value) {
-    console.log(arr);
-    return arr.filter(contact => contact.name.toLowerCase().includes(value));
-  }
-
-  const visableContacts = getContactSearch(contacts, filter);
+  const visableContacts = filterVisableList(contacts, filter);
 
   return (
     <ContactList>
@@ -33,7 +29,7 @@ const ContactsList = () => {
           </ContactText>
           <ButtonDelete
             type="button"
-            onClick={() => dispatch(deleteContacts(id))}
+            onClick={() => dispatch(deleteContact(id))}
           >
             <FaRegTrashAlt />
           </ButtonDelete>
